@@ -23,7 +23,29 @@ else:
     player = new_character(player_id, player_class)
 '''
 
+class MyClass:
+    def __init__(self, chosen_class):
+        self.class_name = chosen_class.class_name
+        self.level = chosen_class.Level
+        self.strength = chosen_class.Strength
+        self.defense = chosen_class.Defense
+        self.magic_defense = chosen_class.Magic_Defense
+        self.attack = chosen_class.Attack
+        self.magic = chosen_class.Magic
+        self.speed = chosen_class.Speed
+        self.luck = chosen_class.Luck
+        self.crit_rate = chosen_class.Crit_Rate
+        self.crit_damage = chosen_class.Crit_Damage
+        self.accuracy = chosen_class.Accuracy
+        self.evasion = chosen_class.Evasion
+        self.dodge = chosen_class.Dodge
+        self.ability_1_text = chosen_class.Ability_1_Text
+        self.ability_1_damage = chosen_class.Ability_1_Damage
+        self.ability_2_text = chosen_class.Ability_2_Text
+        self.ability_2_damage = chosen_class.Ability_2_Damage
+
 class Wizard:
+    class_name = "Wizard"
     Level = 1
     Strength = 1
     Defense = 1
@@ -43,6 +65,7 @@ class Wizard:
     Ability_2_Damage = Magic + Level
 
 class Warrior:
+    class_name = "Warrior"
     Level = 1
     Strength = 5
     Defense = 5
@@ -62,6 +85,7 @@ class Warrior:
     Ability_2_Damage = Strength * 2
 
 class Ranger:
+    class_name = "Ranger"
     Level = 1
     Strength = 1
     Defense = 1
@@ -97,10 +121,10 @@ class Monster:
 
 def FightSimulator(player, monster):
     monster_hp = monster.Strength * 10
-    player_hp = player.Strength * 10
+    player_hp = player.strength * 10
     print("***WARNING MONSTER APPROACHES!!!***\n")
     print("You have encountered a Monster!\n")
-    if player.Speed > monster.Speed:
+    if player.speed > monster.Speed:
         print("You are faster than the monster!\nYou attack first!\n")
         turn = True
     else:          
@@ -109,27 +133,27 @@ def FightSimulator(player, monster):
     
     while monster_hp > 0 or player_hp > 0:
         if turn == True:            
-            choice = int(input("1) Attack\n2)" + 
-                      player.Ability_1_Text + "\n3)" +
-                      player.Ability_2_Text + "\n"))
+            choice = int(input("1) Attack\n2) " + 
+                      player.ability_1_text + "\n3) " +
+                      player.ability_2_text + "\n"))
             if choice == 1:
-                turn_damage = player.Attack
+                turn_damage = player.attack
                 monster_hp = monster_hp - turn_damage
-                print("You hit the monster for ", 
+                print("You hit the monster for", 
                        turn_damage, 
                        " damage!")
                 
             elif choice == 2:
-                turn_damage = player.Ability_1_Damage
+                turn_damage = player.ability_1_damage
                 monster_hp = monster_hp - turn_damage
-                print("You hit the monster for ",
+                print("You hit the monster for",
                       turn_damage,
                       " damage!")
                       
             elif choice == 3:
-                turn_damage = player.Ability_2_Damage
+                turn_damage = player.ability_2_damage
                 monster_hp = monster_hp - turn_damage
-                print("You hit the monster for ",
+                print("You hit the monster for",
                       turn_damage,
                       " damage!")            
             else:
@@ -141,11 +165,11 @@ def FightSimulator(player, monster):
                 turn = False
         else:
             turn_damage = Monster.Attack
-            print("The monster attacks you for ",
+            print("The monster attacks you for",
                   turn_damage,
                   " damage!\n")
             player_hp = player_hp - turn_damage
-            print("You have ",
+            print("You have",
                   player_hp,
                   " health left!")
             if player_hp == 0:
@@ -157,29 +181,24 @@ def FightSimulator(player, monster):
         return True
     else:
         return False
-                
-class SelectClass:
-    def __init__(self):
-        initial_class_selection = input("1) Wizard\n2) Warrior\n3) Ranger\nChoose your class: ")
-        print(f"Your selection is {initial_class_selection}!")
-        if initial_class_selection == "1":
-            initial_class = Wizard
-        elif initial_class_selection == "2":
-            initial_class = Warrior
-        elif initial_class_selection == "3":
-            initial_class = Ranger
             
-        print("Would you like to batlle?")
-        choice = input("(Y) Yes or (N) No\n")
+def select_class():
+    class_choices = {1: Wizard, 2: Warrior, 3: Ranger}
+    initial_class_selection = int(input("1) Wizard\n2) Warrior\n3) Ranger\nChoose your class: "))
+    print(f"Your selection is {class_choices[initial_class_selection].class_name}!")
 
-        if choice == "y":
-            outcome = FightSimulator(initial_class, Monster)
-            if outcome == True:
-                print("Congratulations on winning your first fight")
-            else:
-                print("Why'd you lose?")
-                    
+    return MyClass(class_choices[initial_class_selection])
 
+        
+player = select_class()
 
-player = SelectClass()
+print("Would you like to batlle?")
+choice = input("(Y) Yes or (N) No\n")
+
+if choice == "y":
+    outcome = FightSimulator(player, Monster)
+    if outcome == True:
+        print("Congratulations on winning your first fight")
+    else:
+        print("Why'd you lose?")
 
