@@ -1,6 +1,5 @@
 ##import new_character #imports new_character class
-import os.path 
-global player_select
+import os
 '''
 check_for_file = os.path.isfile("player_profile1.txt")) #returns true or false if file does or doesn't exit
 if check_for_file == True:
@@ -22,6 +21,12 @@ if check_for_file == True:
 else:
     player = new_character(player_id, player_class)
 '''
+check_for_file = os.path.isfile("chapter_1.txt")
+if check_for_file == True:
+    chapter = open("chapter_1.txt", "r")
+    print(chapter.read())
+else:
+    print("file does not exist")
 
 class MyClass:
     def __init__(self, chosen_class):
@@ -201,4 +206,5 @@ if choice == "y":
         print("Congratulations on winning your first fight")
     else:
         print("Why'd you lose?")
+        
 
