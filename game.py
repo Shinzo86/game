@@ -138,10 +138,10 @@ class Monster:
 
 def Fight_Simulator(Player, Monster):
     monster_hp = Monster.Strength * 10
-    player_hp = Player.Strength * 10
+    player_hp = Player.strength * 10
     print("***WARNING MONSTER APPROACHES!!!***\n")
     print("You have encountered a Monster!\n")
-    if Player.Speed > Monster.Speed:
+    if Player.speed > Monster.Speed:
         print("You are faster than the monster!\nYou attack first!\n")
         turn = True
     else:          
@@ -151,13 +151,13 @@ def Fight_Simulator(Player, Monster):
     while monster_hp > 0 or player_hp > 0:
         if turn == True:            
             choice = int(input("1) Attack\n2) " + 
-                      Player.Ability_1_Text + "\n3) " +
-                      Player.Ability_2_Text + "\n"))
+                      Player.ability_1_text + "\n3) " +
+                      Player.ability_2_text + "\n"))
             if choice == 1:
-                turn_damage = Player.Attack
-                try_crit = Roll_Dice(Player.Crit_Rate)
+                turn_damage = Player.attack
+                try_crit = Roll_Dice(Player.crit_rate)
                 if try_crit == True:
-                    turn_damage = turn_damage + ((Player.Crit_Damage * .01) * turn_damage)
+                    turn_damage = turn_damage + ((Player.crit_damage * .01) * turn_damage)
                     print("You hit the monster for", 
                            turn_damage, 
                            " critical damage!")
@@ -167,10 +167,10 @@ def Fight_Simulator(Player, Monster):
                           " damage!")
                 
             elif choice == 2:
-                turn_damage = Player.Ability_1_Damage
-                try_crit = Roll_Dice(Player.Crit_Rate)
+                turn_damage = Player.ability_1_damage
+                try_crit = Roll_Dice(Player.crit_rate)
                 if try_crit == True:
-                    turn_damage = turn_damage + ((Player.Crit_Damage * .01) * turn_damage)
+                    turn_damage = turn_damage + ((Player.crit_damage * .01) * turn_damage)
                     print("You hit the monster for", 
                            turn_damage, 
                            " critical damage!")
@@ -180,10 +180,10 @@ def Fight_Simulator(Player, Monster):
                           " damage!")
                       
             elif choice == 3:
-                turn_damage = Player.Ability_2_Damage
-                try_crit = Roll_Dice(Player.Crit_Rate)
+                turn_damage = Player.ability_2_damage
+                try_crit = Roll_Dice(Player.crit_rate)
                 if try_crit == True:
-                    turn_damage = turn_damage + ((Player.Crit_Damage * .01) * turn_damage)
+                    turn_damage = turn_damage + ((Player.crit_damage * .01) * turn_damage)
                     print("You hit the monster for", 
                            turn_damage, 
                            " critical damage!")
@@ -228,10 +228,10 @@ def Fight_Simulator(Player, Monster):
 def Select_Class(player_name):
     class_choices = {1: Wizard, 2: Warrior, 3: Ranger}
     initial_class_selection = int(input("1) Wizard\n2) Warrior\n3) Ranger\nChoose your class: "))
-    print("Your selection is {class_choices[initial_class_selection].class_name}!")
-    print("Welcome to Narnia ", player_name, "!")
-    print(class_choices[initial_class_selection])
-    input()
+    print(f"Your selection is {class_choices[initial_class_selection].class_name}!")
+    print("Welcome to Narnia,", player_name, "!")
+    # print(class_choices[initial_class_selection])
+    input("Press a key to continue...")
     return MyClass(class_choices[initial_class_selection])
 
 def Roll_Dice(threshold):
