@@ -1,33 +1,45 @@
-##import new_character #imports new_character class
+'''
+    class_name = "Wizard"
+    Level = Player current level. Used to determine multiple stats.
+    HP = Level * Strength
+    Strength    
+        Stat determines overall HP of monsters and players.
+        Will also be used to determine if character can use certain items.
+    Defense
+        Stat determines Physical Attack damage reduction.
+        Total DMG = PA_DMG - Defense
+    Magic_Defense
+        Stat determines Magic Attack dmg reduction.
+        Total DMG = MA_DMG - M. Defense
+    Attack
+        Stat determines base Physical Attack dmg
+        PA_DMG = Attack + Weapon bonus + Skill Bonus
+    Magic
+        Stat determines base Magic Attack damage
+        MG_DMG = Magic + Weapon bonus + Skill Bonus
+    Speed
+        Stat determines speed of attack bar fill rate
+        atk_bar_fill_rate = Speed *.1
+    Luck
+        Stat determines loot chance rarity after combat ends
+        chance_item_drop = luck * 10
+        loot_rarity = luck
+    Crit_Rate
+        Stat determines chance for Critical Strike chance
+        chance_crit = Crit_Rate
+    Crit_Damage
+        Stat determines percentage extra damage if Critical Strike
+        Total DMG = (PA_DMG * (Crit_Damage * .01)) + (MA_DMG * (Crit_Damage * .01))
+    Accuracy = 75
+    Evasion = 35
+    Dodge = 50
+    Ability_1_Text = "Fire Ball"
+    Ability_1_Damage = Magic + Level 
+    Ability_2_Text = "Freeze"
+    Ability_2_Damage = Magic + Level
+'''
 import os
-'''
-check_for_file = os.path.isfile("player_profile1.txt")) #returns true or false if file does or doesn't exit
-if check_for_file == True:
-
-    print("Which character would you like to load?")
-    print("(W) Warrior")
-    print("(S) Wizard")
-    print("(R) Ranger")
-    choice = input("?")
-    if choice == "w":
-        while x != ".":
-            read
-        player.character = load_character(player)
-        
-    
-
-
-
-else:
-    player = new_character(player_id, player_class)
-'''
-check_for_file = os.path.isfile("chapter_1.txt")
-if check_for_file == True:
-    chapter = open("chapter_1.txt", "r")
-    print(chapter.read())
-else:
-    print("file does not exist")
-
+import random
 class MyClass:
     def __init__(self, chosen_class):
         self.class_name = chosen_class.class_name
@@ -114,22 +126,22 @@ class Monster:
     Strength = 1
     Defense = 1
     Magic_Defense = 1
-    Attack = 5
+    Attack = 1
     Magic = 1
-    Speed = 10
+    Speed = 1
     Luck = 1
-    Crit_Rate = 50
-    Crit_Damage = 150
+    Crit_Rate = 10
+    Crit_Damage = 10
     Accuracy = 50
     Evasion = 30
     Dodge = 35
 
-def FightSimulator(player, monster):
-    monster_hp = monster.Strength * 10
-    player_hp = player.strength * 10
+def Fight_Simulator(Player, Monster):
+    monster_hp = Monster.Strength * 10
+    player_hp = Player.Strength * 10
     print("***WARNING MONSTER APPROACHES!!!***\n")
     print("You have encountered a Monster!\n")
-    if player.speed > monster.Speed:
+    if Player.Speed > Monster.Speed:
         print("You are faster than the monster!\nYou attack first!\n")
         turn = True
     else:          
@@ -139,44 +151,70 @@ def FightSimulator(player, monster):
     while monster_hp > 0 or player_hp > 0:
         if turn == True:            
             choice = int(input("1) Attack\n2) " + 
-                      player.ability_1_text + "\n3) " +
-                      player.ability_2_text + "\n"))
+                      Player.Ability_1_Text + "\n3) " +
+                      Player.Ability_2_Text + "\n"))
             if choice == 1:
-                turn_damage = player.attack
-                monster_hp = monster_hp - turn_damage
-                print("You hit the monster for", 
-                       turn_damage, 
-                       " damage!")
+                turn_damage = Player.Attack
+                try_crit = Roll_Dice(Player.Crit_Rate)
+                if try_crit == True:
+                    turn_damage = turn_damage + ((Player.Crit_Damage * .01) * turn_damage)
+                    print("You hit the monster for", 
+                           turn_damage, 
+                           " critical damage!")
+                else:
+                    print("You hit the monster for", 
+                          turn_damage, 
+                          " damage!")
                 
             elif choice == 2:
-                turn_damage = player.ability_1_damage
-                monster_hp = monster_hp - turn_damage
-                print("You hit the monster for",
-                      turn_damage,
-                      " damage!")
+                turn_damage = Player.Ability_1_Damage
+                try_crit = Roll_Dice(Player.Crit_Rate)
+                if try_crit == True:
+                    turn_damage = turn_damage + ((Player.Crit_Damage * .01) * turn_damage)
+                    print("You hit the monster for", 
+                           turn_damage, 
+                           " critical damage!")
+                else:
+                    print("You hit the monster for", 
+                          turn_damage, 
+                          " damage!")
                       
             elif choice == 3:
-                turn_damage = player.ability_2_damage
-                monster_hp = monster_hp - turn_damage
-                print("You hit the monster for",
-                      turn_damage,
-                      " damage!")            
+                turn_damage = Player.Ability_2_Damage
+                try_crit = Roll_Dice(Player.Crit_Rate)
+                if try_crit == True:
+                    turn_damage = turn_damage + ((Player.Crit_Damage * .01) * turn_damage)
+                    print("You hit the monster for", 
+                           turn_damage, 
+                           " critical damage!")
+                else:
+                    print("You hit the monster for", 
+                          turn_damage, 
+                          " damage!")      
             else:
                 print("Invalid choice")
                 
+            print("You have ", player_hp, " left\nThe monster has ", monster_hp, " left")
+            input()
             if monster_hp <= 0:
                 break
             else:
                 turn = False
         else:
             turn_damage = Monster.Attack
-            print("The monster attacks you for",
-                  turn_damage,
-                  " damage!\n")
-            player_hp = player_hp - turn_damage
-            print("You have",
-                  player_hp,
-                  " health left!")
+            try_crit = Roll_Dice(Monster.Crit_Rate)
+            if try_crit == True:
+                turn_damage = turn_damage + ((Monster.Crit_Damage * .01) * turn_damage)
+                print("The monster hit you for", 
+                       turn_damage, 
+                       " critical damage!")
+            else:
+                print("The monster hit you for", 
+                      turn_damage, 
+                      " damage!")      
+            player_hp = player_hp - turn_damage            
+            print("You have ", player_hp, " left\nThe monster has ", monster_hp, " left")
+            input()
             if player_hp == 0:
                 break
             else:
@@ -187,21 +225,54 @@ def FightSimulator(player, monster):
     else:
         return False
             
-def select_class():
+def Select_Class(player_name):
     class_choices = {1: Wizard, 2: Warrior, 3: Ranger}
     initial_class_selection = int(input("1) Wizard\n2) Warrior\n3) Ranger\nChoose your class: "))
-    print(f"Your selection is {class_choices[initial_class_selection].class_name}!")
-
+    print("Your selection is {class_choices[initial_class_selection].class_name}!")
+    print("Welcome to Narnia ", player_name, "!")
+    print(class_choices[initial_class_selection])
+    input()
     return MyClass(class_choices[initial_class_selection])
 
-        
-player = select_class()
+def Roll_Dice(threshold):
+    random_number = random.randint(1, 100)
+    if random_number <= threshold:
+        print(random_number)
+        return True
+    else:
+        print(random_number)
+        return False
+
+def Load_Chapter(chapter):
+    chapter = 1
+    if chapter == 1:
+        os.system("cls")
+        print("   CCC  H   H   A   PPP  TTTTT EEEEE RRRR      11")
+        print("  C   C H   H  A A  P  P   T   E     R   R      1")
+        print("  C     H   H A   A P  P   T   E     R   R      1")
+        print("  C     HHHHH AAAAA PPP    T   EEE   RRRR       1")
+        print("  C     H   H A   A P      T   E     R R        1")
+        print("  C   C H   H A   A P      T   E     R   R      1")
+        print("   CCC  H   H A   A P      T   EEEEE R   R    11111")
+        print("\n\nThunder roars through the rolling hills")
+        print("Lightning fills the black night sky")
+        print("Rain washing away a stench as foul as a rotting flesh")
+        print("\nSounds of a woman screaming can be heard off in the distance")
+
+
+#####This is where everything begins
+#########################################
+print("Hello, please select a name.")
+player_name = input()
+Player = Select_Class(player_name)
+chapter = 1
+Load_Chapter(chapter)
 
 print("Would you like to batlle?")
 choice = input("(Y) Yes or (N) No\n")
 
 if choice == "y":
-    outcome = FightSimulator(player, Monster)
+    outcome = Fight_Simulator(Player, Monster)
     if outcome == True:
         print("Congratulations on winning your first fight")
     else:
