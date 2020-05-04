@@ -119,7 +119,7 @@ class Ranger:
     Ability_1_Text = "Quick Shot"
     Ability_1_Damage = Speed + Attack
     Ability_2_Text = "Arrow Storm"
-    Ability_2_Damage = Attack + Level + Speed
+    Ability_2_Damage = Attack + Speed
     
 class Monster:
     Level = 1
@@ -137,6 +137,7 @@ class Monster:
     Dodge = 35
 
 def Fight_Simulator(Player, Monster):
+    os.system("cls")
     monster_hp = Monster.Strength * 10
     player_hp = Player.strength * 10
     print("***WARNING MONSTER APPROACHES!!!***\n")
@@ -145,7 +146,7 @@ def Fight_Simulator(Player, Monster):
         print("You are faster than the monster!\nYou attack first!\n")
         turn = True
     else:          
-        print("The monster is faster than you and they attack first!")
+        print("The monster is faster than you and they attack first!\n")
         turn = False
     
     while monster_hp > 0 or player_hp > 0:
@@ -157,44 +158,44 @@ def Fight_Simulator(Player, Monster):
                 turn_damage = Player.attack
                 try_crit = Roll_Dice(Player.crit_rate)
                 if try_crit == True:
-                    turn_damage = turn_damage + ((Player.crit_damage * .01) * turn_damage)
+                    turn_damage = int(turn_damage + ((Player.crit_damage * .01) * turn_damage))
                     print("You hit the monster for", 
                            turn_damage, 
-                           " critical damage!")
+                           " critical damage!\n")
                 else:
                     print("You hit the monster for", 
                           turn_damage, 
-                          " damage!")
+                          " damage!\n")
                 
             elif choice == 2:
                 turn_damage = Player.ability_1_damage
                 try_crit = Roll_Dice(Player.crit_rate)
                 if try_crit == True:
-                    turn_damage = turn_damage + ((Player.crit_damage * .01) * turn_damage)
+                    turn_damage = int(turn_damage + ((Player.crit_damage * .01) * turn_damage))
                     print("You hit the monster for", 
                            turn_damage, 
-                           " critical damage!")
+                           " critical damage!\n")
                 else:
                     print("You hit the monster for", 
                           turn_damage, 
-                          " damage!")
+                          " damage!\n")
                       
             elif choice == 3:
                 turn_damage = Player.ability_2_damage
                 try_crit = Roll_Dice(Player.crit_rate)
                 if try_crit == True:
-                    turn_damage = turn_damage + ((Player.crit_damage * .01) * turn_damage)
+                    turn_damage = int(turn_damage + ((Player.crit_damage * .01) * turn_damage))
                     print("You hit the monster for", 
                            turn_damage, 
-                           " critical damage!")
+                           " critical damage!\n")
                 else:
                     print("You hit the monster for", 
                           turn_damage, 
-                          " damage!")      
+                          " damage!\n")      
             else:
                 print("Invalid choice")
-                
-            print("You have ", player_hp, " left\nThe monster has ", monster_hp, " left")
+            monster_hp = monster_hp - turn_damage                
+            print("You have ", player_hp, " left\nThe monster has ", monster_hp, " left\n")
             input()
             if monster_hp <= 0:
                 break
@@ -204,16 +205,16 @@ def Fight_Simulator(Player, Monster):
             turn_damage = Monster.Attack
             try_crit = Roll_Dice(Monster.Crit_Rate)
             if try_crit == True:
-                turn_damage = turn_damage + ((Monster.Crit_Damage * .01) * turn_damage)
+                turn_damage = int(turn_damage + ((Monster.Crit_Damage * .01) * turn_damage))
                 print("The monster hit you for", 
                        turn_damage, 
-                       " critical damage!")
+                       " critical damage!\n")
             else:
                 print("The monster hit you for", 
                       turn_damage, 
-                      " damage!")      
+                      " damage!\n")      
             player_hp = player_hp - turn_damage            
-            print("You have ", player_hp, " left\nThe monster has ", monster_hp, " left")
+            print("You have ", player_hp, " left\nThe monster has ", monster_hp, " left\n")
             input()
             if player_hp == 0:
                 break
@@ -230,21 +231,17 @@ def Select_Class(player_name):
     initial_class_selection = int(input("1) Wizard\n2) Warrior\n3) Ranger\nChoose your class: "))
     print(f"Your selection is {class_choices[initial_class_selection].class_name}!")
     print("Welcome to Narnia,", player_name, "!")
-    # print(class_choices[initial_class_selection])
     input("Press a key to continue...")
     return MyClass(class_choices[initial_class_selection])
 
 def Roll_Dice(threshold):
     random_number = random.randint(1, 100)
     if random_number <= threshold:
-        print(random_number)
         return True
     else:
-        print(random_number)
         return False
 
 def Load_Chapter(chapter):
-    chapter = 1
     if chapter == 1:
         os.system("cls")
         print("   CCC  H   H   A   PPP  TTTTT EEEEE RRRR      11")
@@ -258,6 +255,7 @@ def Load_Chapter(chapter):
         print("Lightning fills the black night sky")
         print("Rain washing away a stench as foul as a rotting flesh")
         print("\nSounds of a woman screaming can be heard off in the distance")
+        print("
 
 
 #####This is where everything begins
@@ -267,15 +265,15 @@ player_name = input()
 Player = Select_Class(player_name)
 chapter = 1
 Load_Chapter(chapter)
+choice = "y"
+while choice != "n":
+    print("Would you like to batlle?")
+    choice = input("(Y) Yes or (N) No\n")
 
-print("Would you like to batlle?")
-choice = input("(Y) Yes or (N) No\n")
-
-if choice == "y":
-    outcome = Fight_Simulator(Player, Monster)
-    if outcome == True:
-        print("Congratulations on winning your first fight")
-    else:
-        print("Why'd you lose?")
-        
-
+    if choice == "y":
+        outcome = Fight_Simulator(Player, Monster)
+        if outcome == True:
+            print("You won!\n")
+        else:
+            print("Why'd you lose?\n")
+            
