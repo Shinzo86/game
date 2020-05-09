@@ -39,7 +39,10 @@
     Ability_2_Damage = Magic + Level
 '''
 import os
+import os.path
 import random
+
+
 class MyClass:
     def __init__(self, chosen_class):
         self.class_name = chosen_class.class_name
@@ -135,6 +138,8 @@ class Monster:
     Accuracy = 50
     Evasion = 30
     Dodge = 35
+    
+
 
 def Fight_Simulator(Player, Monster):
     os.system("cls")
@@ -255,7 +260,7 @@ def Load_Chapter(chapter):
         print("Lightning fills the black night sky")
         print("Rain washing away a stench as foul as a rotting flesh")
         print("\nSounds of a woman screaming can be heard off in the distance")
-        print("
+        
 
 
 #####This is where everything begins
@@ -276,4 +281,31 @@ while choice != "n":
             print("You won!\n")
         else:
             print("Why'd you lose?\n")
+
+player_stats = {
+                 "class_name" : "Ranger",
+                 "Level" : 1,
+                 "Strength" : 1,
+                 "Defense" : 1,
+                 "Magic_Defense" : 1,
+                 "Attack" : 5,
+                 "Magic" : 1,
+                 "Speed" : 10,
+                 "Luck" : 1,
+                 "Crit_Rate" : 50,
+                 "Crit_Damage" : 150,
+                 "Accuracy" : 50,
+                 "Evasion" : 30,
+                 "Dodge" : 35,
+                 "Ability_1_Text" : Player.ability_1_text,
+                 "Ability_1_Damage" : Player.ability_1_damage,
+                 "Ability_2_Text" : Player.ability_2_text,
+                 "Ability_2_Damage" : Player.ability_2_damage
+                }    
+save_data = {
+             "player_name" : player_name,
+             "player_stats" : player_stats,
+             "chapter" : chapter
+            }
             
+        
