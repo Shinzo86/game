@@ -41,7 +41,18 @@
 import os
 import os.path
 import random
-
+level_up_max = {
+                1 : 10,
+                2 : 25,
+                3 : 64,
+                4 : 160,
+                5 : 400,
+                6 : 1000,
+                7 : 2500,
+                8 : 6250,
+                9 : 15625,
+                10 : 39062
+               }
 
 class MyClass:
     def __init__(self, chosen_class):
@@ -63,6 +74,7 @@ class MyClass:
         self.ability_1_damage = chosen_class.Ability_1_Damage
         self.ability_2_text = chosen_class.Ability_2_Text
         self.ability_2_damage = chosen_class.Ability_2_Damage
+        self.player_exp = chosen_class.Player_Exp
 
 class Wizard:
     class_name = "Wizard"
@@ -83,7 +95,8 @@ class Wizard:
     Ability_1_Damage = Magic + Level 
     Ability_2_Text = "Freeze"
     Ability_2_Damage = Magic + Level
-
+    Player_Exp = 0
+    
 class Warrior:
     class_name = "Warrior"
     Level = 1
@@ -103,6 +116,7 @@ class Warrior:
     Ability_1_Damage = 0
     Ability_2_Text = "Counter"
     Ability_2_Damage = Strength * 2
+    Player_Exp = 0
 
 class Ranger:
     class_name = "Ranger"
@@ -123,6 +137,7 @@ class Ranger:
     Ability_1_Damage = Speed + Attack
     Ability_2_Text = "Arrow Storm"
     Ability_2_Damage = Attack + Speed
+    Player_Exp = 0
     
 class Monster:
     Level = 1
@@ -139,8 +154,6 @@ class Monster:
     Evasion = 30
     Dodge = 35
     
-
-
 def Fight_Simulator(Player, Monster):
     os.system("cls")
     monster_hp = Monster.Strength * 10
@@ -227,10 +240,60 @@ def Fight_Simulator(Player, Monster):
                 turn = True
             
     if player_hp > monster_hp:
+        exp_gain = (Monster.Level * .5) + Monster.Level
+        Player.player_exp = Player.player_exp + exp_gain
+        print("You gained ", 
+               exp_gain, 
+               " experience points!\n"
+               "You have a total of ", 
+               Player.player_exp, 
+               " experience points"
+              )
         return True
     else:
         return False
             
+def Level_Up(Player):
+    answer = "n"
+    Player.level = Player.level + 1
+    while answer != "y":
+        print("You have earned 3 skill points!\n")
+        print("\nLevel         :", Player.level,
+              "\nStrength      :", Player.strength,
+              "\nDefense       :", Player.defense,
+              "\nMagic Defense :", Player.magic_defense,
+              "\nAttack        :", Player.attack,
+              "\nMagic         :", Player.magic,
+              "\nSpeed         :", Player.speed,
+              "\nLuck          :", Player.luck
+             )
+        strength_up = int(input("Strength? "))
+        defense_up = int(input("Defense? "))
+        magic_defense_up = int(input ("Magic Defense? "))
+        attack_up = int(input("Attack? "))
+        magic_up = int(input("Magic? "))
+        speed_up = int(input("Speed? "))
+        luck_up = int(input("Luck? "))
+        print("\nStrength      +", strength_up,
+              "\nDefense       +", defense_up,
+              "\nMagic Defense +", magic_defense_up,
+              "\nAttack        +", attack_up,
+              "\nMagic         +", magic_up,
+              "\nSpeed         +", speed_up,
+              "\nLuck          +", luck_up,
+             )
+        print("\nWould you like to save changes?\n(Y) yes or (N) no")
+        answer = input("? ")
+
+    Player.strength = Player.strength + strength_up
+    Player.defense = Player.defense + defense_up
+    Player.magic_defense = Player.magic_defense + magic_defense_up
+    Player.attack = Player.attack + attack_up
+    Player.magic = Player.magic + magic_up
+    Player.speed = Player.speed + speed_up
+    Player.luck = Player.luck + luck_up
+    return(Player)
+          
 def Select_Class(player_name):
     class_choices = {1: Wizard, 2: Warrior, 3: Ranger}
     initial_class_selection = int(input("1) Wizard\n2) Warrior\n3) Ranger\nChoose your class: "))
@@ -279,9 +342,11 @@ while choice != "n":
         outcome = Fight_Simulator(Player, Monster)
         if outcome == True:
             print("You won!\n")
+            if Player.player_exp >= level_up_max[Player.level] :
+                Player = Level_Up(Player)
         else:
             print("Why'd you lose?\n")
-
+               
 player_stats = {
                  "class_name" : "Ranger",
                  "Level" : 1,
@@ -300,11 +365,13 @@ player_stats = {
                  "Ability_1_Text" : Player.ability_1_text,
                  "Ability_1_Damage" : Player.ability_1_damage,
                  "Ability_2_Text" : Player.ability_2_text,
-                 "Ability_2_Damage" : Player.ability_2_damage
+                 "Ability_2_Damage" : Player.ability_2_damage,
+                 "Player_Exp" : Player.player_exp
                 }    
 save_data = {
              "player_name" : player_name,
              "player_stats" : player_stats,
+             "player_exp" : player_exp,
              "chapter" : chapter
             }
             
