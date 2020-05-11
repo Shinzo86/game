@@ -75,6 +75,45 @@ class MyClass:
         self.ability_2_text = chosen_class.Ability_2_Text
         self.ability_2_damage = chosen_class.Ability_2_Damage
         self.player_exp = chosen_class.Player_Exp
+        
+    def Level_Up(self):
+        answer = "n"
+        self.level = self.level + 1
+        while answer != "y":
+            print("You have earned 3 skill points!\n")
+            print("\nLevel         :", self.level,
+                  "\nStrength      :", self.strength,
+                  "\nDefense       :", self.defense,
+                  "\nMagic Defense :", self.magic_defense,
+                  "\nAttack        :", self.attack,
+                  "\nMagic         :", self.magic,
+                  "\nSpeed         :", self.speed,
+                  "\nLuck          :", self.luck
+                 )
+            strength_up = int(input("Strength? "))
+            defense_up = int(input("Defense? "))
+            magic_defense_up = int(input ("Magic Defense? "))
+            attack_up = int(input("Attack? "))
+            magic_up = int(input("Magic? "))
+            speed_up = int(input("Speed? "))
+            luck_up = int(input("Luck? "))
+            print("\nStrength      +", strength_up,
+                  "\nDefense       +", defense_up,
+                  "\nMagic Defense +", magic_defense_up,
+                  "\nAttack        +", attack_up,
+                  "\nMagic         +", magic_up,
+                  "\nSpeed         +", speed_up,
+                  "\nLuck          +", luck_up,
+                 )
+            print("\nWould you like to save changes?\n(Y) yes or (N) no")
+            answer = input("? ")
+        self.strength = self.strength + strength_up
+        self.defense = self.defense + defense_up
+        self.magic_defense = self.magic_defense + magic_defense_up
+        self.attack = self.attack + attack_up
+        self.magic = self.magic + magic_up
+        self.speed = self.speed + speed_up
+        self.luck = self.luck + luck_up
 
 class Wizard:
     class_name = "Wizard"
@@ -233,7 +272,6 @@ def Fight_Simulator(Player, Monster):
                       " damage!\n")      
             player_hp = player_hp - turn_damage            
             print("You have ", player_hp, " left\nThe monster has ", monster_hp, " left\n")
-            input()
             if player_hp == 0:
                 break
             else:
@@ -252,48 +290,7 @@ def Fight_Simulator(Player, Monster):
         return True
     else:
         return False
-            
-def Level_Up(Player):
-    answer = "n"
-    Player.level = Player.level + 1
-    while answer != "y":
-        print("You have earned 3 skill points!\n")
-        print("\nLevel         :", Player.level,
-              "\nStrength      :", Player.strength,
-              "\nDefense       :", Player.defense,
-              "\nMagic Defense :", Player.magic_defense,
-              "\nAttack        :", Player.attack,
-              "\nMagic         :", Player.magic,
-              "\nSpeed         :", Player.speed,
-              "\nLuck          :", Player.luck
-             )
-        strength_up = int(input("Strength? "))
-        defense_up = int(input("Defense? "))
-        magic_defense_up = int(input ("Magic Defense? "))
-        attack_up = int(input("Attack? "))
-        magic_up = int(input("Magic? "))
-        speed_up = int(input("Speed? "))
-        luck_up = int(input("Luck? "))
-        print("\nStrength      +", strength_up,
-              "\nDefense       +", defense_up,
-              "\nMagic Defense +", magic_defense_up,
-              "\nAttack        +", attack_up,
-              "\nMagic         +", magic_up,
-              "\nSpeed         +", speed_up,
-              "\nLuck          +", luck_up,
-             )
-        print("\nWould you like to save changes?\n(Y) yes or (N) no")
-        answer = input("? ")
-
-    Player.strength = Player.strength + strength_up
-    Player.defense = Player.defense + defense_up
-    Player.magic_defense = Player.magic_defense + magic_defense_up
-    Player.attack = Player.attack + attack_up
-    Player.magic = Player.magic + magic_up
-    Player.speed = Player.speed + speed_up
-    Player.luck = Player.luck + luck_up
-    return(Player)
-          
+                      
 def Select_Class(player_name):
     class_choices = {1: Wizard, 2: Warrior, 3: Ranger}
     initial_class_selection = int(input("1) Wizard\n2) Warrior\n3) Ranger\nChoose your class: "))
@@ -332,7 +329,7 @@ print("Hello, please select a name.")
 player_name = input()
 Player = Select_Class(player_name)
 chapter = 1
-Load_Chapter(chapter)
+#Load_Chapter(chapter)
 choice = "y"
 while choice != "n":
     print("Would you like to batlle?")
@@ -343,7 +340,7 @@ while choice != "n":
         if outcome == True:
             print("You won!\n")
             if Player.player_exp >= level_up_max[Player.level] :
-                Player = Level_Up(Player)
+                Player = Player.Level_Up()
         else:
             print("Why'd you lose?\n")
                
