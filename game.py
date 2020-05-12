@@ -42,19 +42,18 @@ import os
 import os.path
 import random
 level_up_max = {
-                1 : 10,
-                2 : 25,
-                3 : 64,
-                4 : 160,
-                5 : 400,
-                6 : 1000,
-                7 : 2500,
-                8 : 6250,
-                9 : 15625,
-                10 : 39062
-               }
+    1 : 10,
+    2 : 25,
+    3 : 64,
+    4 : 160,
+    5 : 400,
+    6 : 1000,
+    7 : 2500,
+    8 : 6250,
+    9 : 15625,
+    10 : 39062}
 
-class MyClass:
+class PlayerOne:
     def __init__(self, chosen_class):
         self.class_name = chosen_class.class_name
         self.level = chosen_class.Level
@@ -80,7 +79,8 @@ class MyClass:
         answer = "n"
         self.level = self.level + 1
         while answer != "y":
-            print("You have earned 3 skill points!\n")
+            print("\n-----------LEVEL UP-------------")
+            print("\nYou have earned 3 skill points!\n")
             print("\nLevel         :", self.level,
                   "\nStrength      :", self.strength,
                   "\nDefense       :", self.defense,
@@ -253,7 +253,6 @@ def Fight_Simulator(Player, Monster):
                 print("Invalid choice")
             monster_hp = monster_hp - turn_damage                
             print("You have ", player_hp, " left\nThe monster has ", monster_hp, " left\n")
-            input()
             if monster_hp <= 0:
                 break
             else:
@@ -297,7 +296,7 @@ def Select_Class(player_name):
     print(f"Your selection is {class_choices[initial_class_selection].class_name}!")
     print("Welcome to Narnia,", player_name, "!")
     input("Press a key to continue...")
-    return MyClass(class_choices[initial_class_selection])
+    return PlayerOne(class_choices[initial_class_selection])
 
 def Roll_Dice(threshold):
     random_number = random.randint(1, 100)
@@ -306,30 +305,48 @@ def Roll_Dice(threshold):
     else:
         return False
 
-def Load_Chapter(chapter):
-    if chapter == 1:
-        os.system("cls")
-        print("   CCC  H   H   A   PPP  TTTTT EEEEE RRRR      11")
-        print("  C   C H   H  A A  P  P   T   E     R   R      1")
-        print("  C     H   H A   A P  P   T   E     R   R      1")
-        print("  C     HHHHH AAAAA PPP    T   EEE   RRRR       1")
-        print("  C     H   H A   A P      T   E     R R        1")
-        print("  C   C H   H A   A P      T   E     R   R      1")
-        print("   CCC  H   H A   A P      T   EEEEE R   R    11111")
-        print("\n\nThunder roars through the rolling hills")
-        print("Lightning fills the black night sky")
-        print("Rain washing away a stench as foul as a rotting flesh")
-        print("\nSounds of a woman screaming can be heard off in the distance")
-        
-
-
+chapter = {
+    1 : "chapter_one",
+    2 : "chapter_two",
+    3 : "chapter_three",
+    4 : "chapter_four",
+    5 : "chapter_five"}
+               
+chapter_one = {
+    "main_story" = False,
+    "sub_story_one" = False,
+    "sub_story_two" = False,
+    "sub_story_three" = False}
+    
+chapter_two = {
+    "main_story" = False,
+    "sub_story_one" = False
+    "sub_story_two" = False,
+    "sub_story_three" = False}
+    
+chapter_three = {
+    "main_story" = False,
+    "sub_story_one" = False
+    "sub_story_two" = False,
+    "sub_story_three" = False}
+    
+chapter_four = {
+    "main_story" = False,
+    "sub_story_one" = False
+    "sub_story_two" = False,
+    "sub_story_three" = False} 
+    
+chapter_five = {
+    "main_story" = False,
+    "sub_story_one" = False
+    "sub_story_two" = False,
+    "sub_story_three" = False}    
+    
 #####This is where everything begins
 #########################################
 print("Hello, please select a name.")
 player_name = input()
 Player = Select_Class(player_name)
-chapter = 1
-#Load_Chapter(chapter)
 choice = "y"
 while choice != "n":
     print("Would you like to batlle?")
@@ -340,7 +357,7 @@ while choice != "n":
         if outcome == True:
             print("You won!\n")
             if Player.player_exp >= level_up_max[Player.level] :
-                Player = Player.Level_Up()
+                Player.Level_Up()
         else:
             print("Why'd you lose?\n")
                
