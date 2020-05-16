@@ -55,7 +55,7 @@ level_up_max = {
                }
 
 class PlayerOne:
-    def __init__(self, chosen_class):
+    def __init__(self, chosen_class, chosen_name):
         self.class_name = chosen_class.class_name
         self.level = chosen_class.Level
         self.strength = chosen_class.Strength
@@ -75,6 +75,7 @@ class PlayerOne:
         self.ability_2_text = chosen_class.Ability_2_Text
         self.ability_2_damage = chosen_class.Ability_2_Damage
         self.player_exp = chosen_class.Player_Exp
+        self.player_name = chosen_name
         
     def Level_Up(self):
         answer = "n"
@@ -300,7 +301,7 @@ def Select_Class(player_name):
     print(f"Your selection is {class_choices[initial_class_selection].class_name}!")
     print("Welcome to Blah Blah,", player_name, "!")
     input("Press a key to continue...")
-    return PlayerOne(class_choices[initial_class_selection])
+    return PlayerOne(class_choices[initial_class_selection], player_name)
 
 def Roll_Dice(threshold):
     random_number = random.randint(1, 100)
@@ -313,51 +314,78 @@ def Roll_Dice(threshold):
 Story needs to filled out along with all corresponding chapters
 '''
 
-def chapter_one_prologue():
-    print("Hello, please select a name.")
-    player_name = input()
-    Player = Select_Class(player_name)
-    current_chapter = chapter
-    os.system("cls")
-    print("<INSERT GAME PROLOGUE>")
-    auto_save(save_data)
-
-def auto_save(save_data):
-    for x in save_data
+def chapter_one_prologue(save):
     
-               
+
+    os.system("cls")
+    save["chapter"][1]["started"] = True
+
+    print("<INSERT GAME PROLOGUE>")
+    auto_save(save, Player)
+
+def auto_save(save, my_player):
+    save["player_stats"] = {
+            "class_name"       : my_player.class_name,
+            "level"            : my_player.level,
+            "strength"         : my_player.strength,
+            "defense"          : my_player.defense,
+            "magic_defense"    : my_player.magic_defense,
+            "attack"           : my_player.attack,
+            "magic"            : my_player.magic,
+            "speed"            : my_player.speed,
+            "luck"             : my_player.luck,
+            "crit_rate"        : my_player.crit_rate,
+            "crit_damage"      : my_player.crit_damage,
+            "accuracy"         : my_player.accuracy,
+            "evasion"          : my_player.evasion,
+            "dodge"            : my_player.dodge,
+            "ability_1_text"   : my_player.ability_1_text,
+            "ability_1_damage" : my_player.ability_1_damage,
+            "ability_2_text"   : my_player.ability_2_text,
+            "ability_2_damage" : my_player.ability_2_damage,
+            "player_exp"       : my_player.player_exp,
+            "player_name"      : my_player.player_name
+            }
+    
+    # for x in save_data
+
 chapter_one = {
-    "main_story" : False,
-    "sub_story_one" : False,
-    "sub_story_two" : False,
+    "started"         : False,
+    "main_story"      : False,
+    "sub_story_one"   : False,
+    "sub_story_two"   : False,
     "sub_story_three" : False
               } 
               
 chapter_two = {
-    "main_story" : False,
-    "sub_story_one" : False,
-    "sub_story_two" : False,
+    "started"         : False,
+    "main_story"      : False,
+    "sub_story_one"   : False,
+    "sub_story_two"   : False,
     "sub_story_three" : False
               }
     
 chapter_three = {
-    "main_story" : False,
-    "sub_story_one" : False,
-    "sub_story_two" : False,
+    "started"         : False,
+    "main_story"      : False,
+    "sub_story_one"   : False,
+    "sub_story_two"   : False,
     "sub_story_three" : False
                 }
     
 chapter_four = {
-    "main_story" : False,
-    "sub_story_one" : False,
-    "sub_story_two" : False,
+    "started"         : False,
+    "main_story"      : False,
+    "sub_story_one"   : False,
+    "sub_story_two"   : False,
     "sub_story_three" : False
                } 
     
 chapter_five = {
-    "main_story" : False,
-    "sub_story_one" : False,
-    "sub_story_two" : False,
+    "started"         : False,
+    "main_story"      : False,
+    "sub_story_one"   : False,
+    "sub_story_two"   : False,
     "sub_story_three" : False
                }   
                
@@ -367,12 +395,19 @@ chapter = {
     3 : chapter_three,
     4 : chapter_four,
     5 : chapter_five
-          }               
+          }            
+
+save_data = {
+             "player_name" : None,
+             "player_stats" : None,
+             "chapter" : chapter
+            }   
 
 '''TODO
 Main Menu screen needs to updated with Character function and View character function
 '''
-while main_menu != False:
+viewing_main_menu = True
+while viewing_main_menu:
     print("Welcome to Blah Blah\n",
           "Main Menu\n",
           "1: Start New Game\n",
@@ -380,8 +415,12 @@ while main_menu != False:
           "3: Exit Game\n"
           )
     choice = int(input("? "))
-    if input == 1:
-        chapter_one_prologue()
+    if choice == 1:
+        print("Hello, please select a name.")
+        player_name = input()
+        Player = Select_Class(player_name)
+        chapter_one_prologue(save_data)
+        viewing_main_menu = False
     else:
         exit()
 
@@ -401,10 +440,6 @@ while choice != "n":
         else:
             print("Why'd you lose?\n")
                
-save_data = {
-             "player_name" : player_name,
-             "player_stats" : Player,
-             "chapter" : current_chapter
-            }
+
             
         
