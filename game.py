@@ -51,7 +51,8 @@ level_up_max = {
     7 : 2500,
     8 : 6250,
     9 : 15625,
-    10 : 39062}
+    10 : 39062
+               }
 
 class PlayerOne:
     def __init__(self, chosen_class):
@@ -289,12 +290,15 @@ def Fight_Simulator(Player, Monster):
         return True
     else:
         return False
-                      
+
+'''TODO
+Add a way to display stats and description of classes
+'''                      
 def Select_Class(player_name):
     class_choices = {1: Wizard, 2: Warrior, 3: Ranger}
     initial_class_selection = int(input("1) Wizard\n2) Warrior\n3) Ranger\nChoose your class: "))
     print(f"Your selection is {class_choices[initial_class_selection].class_name}!")
-    print("Welcome to Narnia,", player_name, "!")
+    print("Welcome to Blah Blah,", player_name, "!")
     input("Press a key to continue...")
     return PlayerOne(class_choices[initial_class_selection])
 
@@ -305,48 +309,84 @@ def Roll_Dice(threshold):
     else:
         return False
 
-chapter = {
-    1 : "chapter_one",
-    2 : "chapter_two",
-    3 : "chapter_three",
-    4 : "chapter_four",
-    5 : "chapter_five"}
+'''TODO
+Story needs to filled out along with all corresponding chapters
+'''
+
+def chapter_one_prologue():
+    print("Hello, please select a name.")
+    player_name = input()
+    Player = Select_Class(player_name)
+    current_chapter = chapter
+    os.system("cls")
+    print("<INSERT GAME PROLOGUE>")
+    auto_save(save_data)
+
+def auto_save(save_data):
+    for x in save_data
+    
                
 chapter_one = {
-    "main_story" = False,
-    "sub_story_one" = False,
-    "sub_story_two" = False,
-    "sub_story_three" = False}
-    
+    "main_story" : False,
+    "sub_story_one" : False,
+    "sub_story_two" : False,
+    "sub_story_three" : False
+              } 
+              
 chapter_two = {
-    "main_story" = False,
-    "sub_story_one" = False
-    "sub_story_two" = False,
-    "sub_story_three" = False}
+    "main_story" : False,
+    "sub_story_one" : False,
+    "sub_story_two" : False,
+    "sub_story_three" : False
+              }
     
 chapter_three = {
-    "main_story" = False,
-    "sub_story_one" = False
-    "sub_story_two" = False,
-    "sub_story_three" = False}
+    "main_story" : False,
+    "sub_story_one" : False,
+    "sub_story_two" : False,
+    "sub_story_three" : False
+                }
     
 chapter_four = {
-    "main_story" = False,
-    "sub_story_one" = False
-    "sub_story_two" = False,
-    "sub_story_three" = False} 
+    "main_story" : False,
+    "sub_story_one" : False,
+    "sub_story_two" : False,
+    "sub_story_three" : False
+               } 
     
 chapter_five = {
-    "main_story" = False,
-    "sub_story_one" = False
-    "sub_story_two" = False,
-    "sub_story_three" = False}    
+    "main_story" : False,
+    "sub_story_one" : False,
+    "sub_story_two" : False,
+    "sub_story_three" : False
+               }   
+               
+chapter = {
+    1 : chapter_one,
+    2 : chapter_two,
+    3 : chapter_three,
+    4 : chapter_four,
+    5 : chapter_five
+          }               
+
+'''TODO
+Main Menu screen needs to updated with Character function and View character function
+'''
+while main_menu != False:
+    print("Welcome to Blah Blah\n",
+          "Main Menu\n",
+          "1: Start New Game\n",
+          "2: Load Character\n",
+          "3: Exit Game\n"
+          )
+    choice = int(input("? "))
+    if input == 1:
+        chapter_one_prologue()
+    else:
+        exit()
+
     
-#####This is where everything begins
-#########################################
-print("Hello, please select a name.")
-player_name = input()
-Player = Select_Class(player_name)
+
 choice = "y"
 while choice != "n":
     print("Would you like to batlle?")
@@ -361,32 +401,10 @@ while choice != "n":
         else:
             print("Why'd you lose?\n")
                
-player_stats = {
-                 "class_name" : "Ranger",
-                 "Level" : 1,
-                 "Strength" : 1,
-                 "Defense" : 1,
-                 "Magic_Defense" : 1,
-                 "Attack" : 5,
-                 "Magic" : 1,
-                 "Speed" : 10,
-                 "Luck" : 1,
-                 "Crit_Rate" : 50,
-                 "Crit_Damage" : 150,
-                 "Accuracy" : 50,
-                 "Evasion" : 30,
-                 "Dodge" : 35,
-                 "Ability_1_Text" : Player.ability_1_text,
-                 "Ability_1_Damage" : Player.ability_1_damage,
-                 "Ability_2_Text" : Player.ability_2_text,
-                 "Ability_2_Damage" : Player.ability_2_damage,
-                 "Player_Exp" : Player.player_exp
-                }    
 save_data = {
              "player_name" : player_name,
-             "player_stats" : player_stats,
-             "player_exp" : player_exp,
-             "chapter" : chapter
+             "player_stats" : Player,
+             "chapter" : current_chapter
             }
             
         
