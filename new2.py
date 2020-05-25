@@ -1,12 +1,4 @@
-position = {
-    "current" : town_a
-    "is_hostile" : current["hostile"]
-    "is_level"   : current["level"]
-    "north"      : current["n"]
-    "south"      : current["s"]
-    "east"       : current["e"]
-    "west"       : current["w"]
-           }
+position = {}
 
 town_a = {
     "hostile" : False
@@ -97,11 +89,14 @@ field_b = {
     "e"       : False
     "w"       : False
           }
-
+position = town_a.copy()
 roaming = True         
-while roaming == True:
-    if "current" in position:
-        print("which way would you like to go")
-        print("1: North ", 
-               position["
+while roaming == True:   
+    print("which way would you like to go")
+    print(position["n"])
+    print(position["s"])
+    print(position["e"])
+    print(position["w"])
+    
+    
     
