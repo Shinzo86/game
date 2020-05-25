@@ -38,9 +38,11 @@
     Ability_2_Text = "Freeze"
     Ability_2_Damage = Magic + Level
 '''
+import json
 import os
 import os.path
 import random
+
 level_up_max = {
     1 : 10,
     2 : 25,
@@ -56,66 +58,67 @@ level_up_max = {
 
 class PlayerOne:
     def __init__(self, chosen_class, chosen_name):
-        self.class_name = chosen_class.class_name
-        self.level = chosen_class.Level
-        self.strength = chosen_class.Strength
-        self.defense = chosen_class.Defense
-        self.magic_defense = chosen_class.Magic_Defense
-        self.attack = chosen_class.Attack
-        self.magic = chosen_class.Magic
-        self.speed = chosen_class.Speed
-        self.luck = chosen_class.Luck
-        self.crit_rate = chosen_class.Crit_Rate
-        self.crit_damage = chosen_class.Crit_Damage
-        self.accuracy = chosen_class.Accuracy
-        self.evasion = chosen_class.Evasion
-        self.dodge = chosen_class.Dodge
-        self.ability_1_text = chosen_class.Ability_1_Text
-        self.ability_1_damage = chosen_class.Ability_1_Damage
-        self.ability_2_text = chosen_class.Ability_2_Text
-        self.ability_2_damage = chosen_class.Ability_2_Damage
-        self.player_exp = chosen_class.Player_Exp
-        self.player_name = chosen_name
+        self.class_name        = chosen_class.class_name
+        self.level             = chosen_class.Level
+        self.strength          = chosen_class.Strength
+        self.defense           = chosen_class.Defense
+        self.magic_defense     = chosen_class.Magic_Defense
+        self.attack            = chosen_class.Attack
+        self.magic             = chosen_class.Magic
+        self.speed             = chosen_class.Speed
+        self.luck              = chosen_class.Luck
+        self.crit_rate         = chosen_class.Crit_Rate
+        self.crit_damage       = chosen_class.Crit_Damage
+        self.accuracy          = chosen_class.Accuracy
+        self.evasion           = chosen_class.Evasion
+        self.dodge             = chosen_class.Dodge
+        self.ability_1_text    = chosen_class.Ability_1_Text
+        self.ability_1_damage  = chosen_class.Ability_1_Damage
+        self.ability_2_text    = chosen_class.Ability_2_Text
+        self.ability_2_damage  = chosen_class.Ability_2_Damage
+        self.player_exp        = chosen_class.Player_Exp
+        self.player_name       = chosen_name
         
-    def Level_Up(self):
-        answer = "n"
-        self.level = self.level + 1
-        while answer != "y":
-            print("\n-----------LEVEL UP-------------")
-            print("\nYou have earned 3 skill points!\n")
-            print("\nLevel         :", self.level,
-                  "\nStrength      :", self.strength,
-                  "\nDefense       :", self.defense,
-                  "\nMagic Defense :", self.magic_defense,
-                  "\nAttack        :", self.attack,
-                  "\nMagic         :", self.magic,
-                  "\nSpeed         :", self.speed,
-                  "\nLuck          :", self.luck
-                 )
-            strength_up = int(input("Strength? "))
-            defense_up = int(input("Defense? "))
-            magic_defense_up = int(input ("Magic Defense? "))
-            attack_up = int(input("Attack? "))
-            magic_up = int(input("Magic? "))
-            speed_up = int(input("Speed? "))
-            luck_up = int(input("Luck? "))
-            print("\nStrength      +", strength_up,
-                  "\nDefense       +", defense_up,
-                  "\nMagic Defense +", magic_defense_up,
-                  "\nAttack        +", attack_up,
-                  "\nMagic         +", magic_up,
-                  "\nSpeed         +", speed_up,
-                  "\nLuck          +", luck_up,
-                 )
-            print("\nWould you like to save changes?\n(Y) yes or (N) no")
-            answer = input("? ")
-        self.strength = self.strength + strength_up
-        self.defense = self.defense + defense_up
-        self.magic_defense = self.magic_defense + magic_defense_up
-        self.attack = self.attack + attack_up
-        self.magic = self.magic + magic_up
-        self.speed = self.speed + speed_up
-        self.luck = self.luck + luck_up
+def Level_Up(self):
+    answer = "n"
+    self["level"] += 1
+    skill_points = 3
+    while answer != "y":
+        print("\n-----------LEVEL UP-------------")
+        print("\nYou have earned 3 skill points!\n")
+        print("\nLevel         :", self["level"],
+              "\nStrength      :", self["strength"],
+              "\nDefense       :", self["defense"],
+              "\nMagic Defense :", self["magic_defense"],
+              "\nAttack        :", self["attack"],
+              "\nMagic         :", self["magic"],
+              "\nSpeed         :", self["speed"],
+              "\nLuck          :", self["luck"]
+             )
+        strength_up      = int(input("Strength? "))
+        defense_up       = int(input("Defense? "))
+        magic_defense_up = int(input ("Magic Defense? "))
+        attack_up        = int(input("Attack? "))
+        magic_up         = int(input("Magic? "))
+        speed_up         = int(input("Speed? "))
+        luck_up          = int(input("Luck? "))
+        print("\nStrength      +", strength_up,
+              "\nDefense       +", defense_up,
+              "\nMagic Defense +", magic_defense_up,
+              "\nAttack        +", attack_up,
+              "\nMagic         +", magic_up,
+              "\nSpeed         +", speed_up,
+              "\nLuck          +", luck_up,
+             )
+        print("\nWould you like to save changes?\n(Y) yes or (N) no")
+        answer = input("? ")
+    self["strength"]      += strength_up
+    self["defense"]       += defense_up
+    self["magic_defense"] += magic_defense_up
+    self["attack"]        += attack_up
+    self["magic"]         += magic_up
+    self["speed"]         += speed_up
+    self["luck"]          += luck_up
 
 class Wizard:
     class_name = "Wizard"
@@ -194,14 +197,15 @@ class Monster:
     Accuracy = 50
     Evasion = 30
     Dodge = 35
-    
-def Fight_Simulator(Player, Monster):
+'''TODO
+Need a catch() for all logic errors
+'''    
+def fight_simulator(Player, Monster):
     os.system("cls")
     monster_hp = Monster.Strength * 10
-    player_hp = Player.strength * 10
+    player_hp = Player["strength"] * 10
     print("***WARNING MONSTER APPROACHES!!!***\n")
-    print("You have encountered a Monster!\n")
-    if Player.speed > Monster.Speed:
+    if Player["speed"] > Monster.Speed:
         print("You are faster than the monster!\nYou attack first!\n")
         turn = True
     else:          
@@ -211,13 +215,13 @@ def Fight_Simulator(Player, Monster):
     while monster_hp > 0 or player_hp > 0:
         if turn == True:            
             choice = int(input("1) Attack\n2) " + 
-                      Player.ability_1_text + "\n3) " +
-                      Player.ability_2_text + "\n"))
+                      Player["ability_1_text"] + "\n3) " +
+                      Player["ability_2_text"] + "\n"))
             if choice == 1:
-                turn_damage = Player.attack
-                try_crit = Roll_Dice(Player.crit_rate)
+                turn_damage = Player["attack"]
+                try_crit = roll_dice(Player["crit_rate"])
                 if try_crit == True:
-                    turn_damage = int(turn_damage + ((Player.crit_damage * .01) * turn_damage))
+                    turn_damage = int(turn_damage + ((Player["crit_damage"] * .01) * turn_damage))
                     print("You hit the monster for", 
                            turn_damage, 
                            " critical damage!\n")
@@ -225,12 +229,19 @@ def Fight_Simulator(Player, Monster):
                     print("You hit the monster for", 
                           turn_damage, 
                           " damage!\n")
-                
+                monster_hp = monster_hp - turn_damage                
+                print("You have ", player_hp, " left\nThe monster has ", monster_hp, " left\n")
+                if monster_hp <= 0:
+                    break
+                else:
+                    turn = False
+
             elif choice == 2:
-                turn_damage = Player.ability_1_damage
-                try_crit = Roll_Dice(Player.crit_rate)
+                turn_damage = Player["ability_1_damage"]
+                try_crit = roll_dice(Player["crit_rate"])
+                
                 if try_crit == True:
-                    turn_damage = int(turn_damage + ((Player.crit_damage * .01) * turn_damage))
+                    turn_damage = int(turn_damage + ((Player["crit_damage"] * .01) * turn_damage))
                     print("You hit the monster for", 
                            turn_damage, 
                            " critical damage!\n")
@@ -238,30 +249,40 @@ def Fight_Simulator(Player, Monster):
                     print("You hit the monster for", 
                           turn_damage, 
                           " damage!\n")
-                      
+                          
+                monster_hp = monster_hp - turn_damage                
+                print("You have ", player_hp, " left\nThe monster has ", monster_hp, " left\n")
+                
+                if monster_hp <= 0:
+                    break
+                else:
+                    turn = False
+      
             elif choice == 3:
-                turn_damage = Player.ability_2_damage
-                try_crit = Roll_Dice(Player.crit_rate)
+                turn_damage = Player["ability_2_damage"]
+                try_crit = roll_dice(Player["crit_rate"])
+                
                 if try_crit == True:
-                    turn_damage = int(turn_damage + ((Player.crit_damage * .01) * turn_damage))
+                    turn_damage = int(turn_damage + ((Player["crit_damage"] * .01) * turn_damage))
                     print("You hit the monster for", 
                            turn_damage, 
                            " critical damage!\n")
                 else:
                     print("You hit the monster for", 
                           turn_damage, 
-                          " damage!\n")      
+                          " damage!\n")
+                monster_hp = monster_hp - turn_damage                
+                print("You have ", player_hp, " left\nThe monster has ", monster_hp, " left\n")
+                if monster_hp <= 0:
+                    break
+                else:
+                    turn = False
             else:
                 print("Invalid choice")
-            monster_hp = monster_hp - turn_damage                
-            print("You have ", player_hp, " left\nThe monster has ", monster_hp, " left\n")
-            if monster_hp <= 0:
-                break
-            else:
-                turn = False
+                
         else:
             turn_damage = Monster.Attack
-            try_crit = Roll_Dice(Monster.Crit_Rate)
+            try_crit = roll_dice(Monster.Crit_Rate)
             if try_crit == True:
                 turn_damage = int(turn_damage + ((Monster.Crit_Damage * .01) * turn_damage))
                 print("The monster hit you for", 
@@ -280,14 +301,14 @@ def Fight_Simulator(Player, Monster):
             
     if player_hp > monster_hp:
         exp_gain = (Monster.Level * .5) + Monster.Level
-        Player.player_exp = Player.player_exp + exp_gain
+        Player["player_exp"] = Player["player_exp"] + exp_gain
         print("You gained ", 
                exp_gain, 
                " experience points!\n"
                "You have a total of ", 
-               Player.player_exp, 
+               Player["player_exp"], 
                " experience points"
-              )
+              )        
         return True
     else:
         return False
@@ -295,16 +316,86 @@ def Fight_Simulator(Player, Monster):
 '''TODO
 Add a way to display stats and description of classes
 '''                      
-def Select_Class(player_name):
-    class_choices = {1: Wizard, 2: Warrior, 3: Ranger}
-    initial_class_selection = int(input("1) Wizard\n2) Warrior\n3) Ranger\nChoose your class: "))
+def select_class(player_name):
+    
+    choice = "n"
+    while choice == "n" or choice == "N":
+        os.system("cls")
+        class_choices = {1: Wizard, 2: Warrior, 3: Ranger}
+        initial_class_selection = int(input("1) Wizard\n2) Warrior\n3) Ranger\nChoose your class: "))
+        
+        if initial_class_selection == 1:
+            print("Class         :", Wizard.class_name)
+            print("Strength      :", Wizard.Strength)
+            print("Defense       :", Wizard.Defense)
+            print("Magic Defense :", Wizard.Magic_Defense)
+            print("Attack        :", Wizard.Attack)
+            print("Magic         :", Wizard.Magic)
+            print("Speed         :", Wizard.Speed)
+            print("Luck          :", Wizard.Luck)
+            print("Crit Rate     :", Wizard.Crit_Rate)
+            print("Crit Damage   :", Wizard.Crit_Damage)
+            print("Accuracy      :", Wizard.Accuracy)
+            print("Evasion       :", Wizard.Evasion)
+            print("Dodge         :", Wizard.Dodge)
+            print("Ability 1     :", Wizard.Ability_1_Text)
+            print("Ability 2     :", Wizard.Ability_2_Text)
+            print("\nAre you sure you would like to select the Wizard?\n")
+            print("(Y) Yes or (N) No")
+            choice = input("? ")
+                
+        elif initial_class_selection == 2:
+            print("Class         :", Warrior.class_name)
+            print("Strength      :", Warrior.Strength)
+            print("Defense       :", Warrior.Defense)
+            print("Magic Defense :", Warrior.Magic_Defense)
+            print("Attack        :", Warrior.Attack)
+            print("Magic         :", Warrior.Magic)
+            print("Speed         :", Warrior.Speed)
+            print("Luck          :", Warrior.Luck)
+            print("Crit Rate     :", Warrior.Crit_Rate)
+            print("Crit Damage   :", Warrior.Crit_Damage)
+            print("Accuracy      :", Warrior.Accuracy)
+            print("Evasion       :", Warrior.Evasion)
+            print("Dodge         :", Warrior.Dodge)
+            print("Ability 1     :", Warrior.Ability_1_Text)
+            print("Ability 2     :", Warrior.Ability_2_Text)
+            print("\nAre you sure you would like to select the Warrior?\n")
+            print("(Y) Yes or (N) No")
+            choice = input("? ")
+
+        elif initial_class_selection == 3:
+            print("Class         :", Ranger.class_name)
+            print("Strength      :", Ranger.Strength)
+            print("Defense       :", Ranger.Defense)
+            print("Magic Defense :", Ranger.Magic_Defense)
+            print("Attack        :", Ranger.Attack)
+            print("Magic         :", Ranger.Magic)
+            print("Speed         :", Ranger.Speed)
+            print("Luck          :", Ranger.Luck)
+            print("Crit Rate     :", Ranger.Crit_Rate)
+            print("Crit Damage   :", Ranger.Crit_Damage)
+            print("Accuracy      :", Ranger.Accuracy)
+            print("Evasion       :", Ranger.Evasion)
+            print("Dodge         :", Ranger.Dodge)
+            print("Ability 1     :", Ranger.Ability_1_Text)
+            print("Ability 2     :", Ranger.Ability_2_Text)
+            print("\nAre you sure you would like to select the Ranger?\n")
+            print("(Y) Yes or (N) No")
+            choice = input("? ")
+
+        else:
+            print("Invalid Choice")
+            input("Press any key to continue...")
+        
     print(f"Your selection is {class_choices[initial_class_selection].class_name}!")
     print("Welcome to Blah Blah,", player_name, "!")
     input("Press a key to continue...")
     return PlayerOne(class_choices[initial_class_selection], player_name)
 
-def Roll_Dice(threshold):
+def roll_dice(threshold):
     random_number = random.randint(1, 100)
+    
     if random_number <= threshold:
         return True
     else:
@@ -314,14 +405,44 @@ def Roll_Dice(threshold):
 Story needs to filled out along with all corresponding chapters
 '''
 
-def chapter_one_prologue(save):
-    
-
+def chapter_one_prologue(save):   
     os.system("cls")
     save["chapter"][1]["started"] = True
-
     print("<INSERT GAME PROLOGUE>")
     auto_save(save, Player)
+    chapter_one_main(save)
+
+def chapter_one_main(save):
+    os.system("cls")
+    save["chapter"][1]["main_story"] = True
+    print("<INSERT MAIN STORY>")
+    print("Should we head out on the road?\n")
+    print("(Y) Yes or (N) No")
+    user_choice = input("? ")
+    if user_choice == "Y" or "y":
+        road_to_town(save)
+    else:
+        town_a(save)
+        
+def road_to_town(save):
+    stay_on_road = True
+    while stay_on_road == True:
+        aggro = roll_dice(30)
+        if aggro == True:
+            print("SOMETHING IS COMING!")
+            input("Press a key to continue...")
+            outcome = fight_simulator(save["player_stats"], Monster)
+            if outcome == True:
+                if save["player_stats"]["player_exp"] >= level_up_max[(save["player_stats"]["level"])]:
+                    Level_Up(save["player_stats"])
+            else:
+                road_to_town(save)
+        else:
+            print("Should we camp for the night?")
+            print("(Y) yes or (N) No")
+            choice = input("? ")
+            if choice == "y" or choice == "Y":
+                stay_on_road = False
 
 def auto_save(save, my_player):
     save["player_stats"] = {
@@ -345,10 +466,17 @@ def auto_save(save, my_player):
             "ability_2_damage" : my_player.ability_2_damage,
             "player_exp"       : my_player.player_exp,
             "player_name"      : my_player.player_name
-            }
+            }      
+    f = open((my_player.player_name)+".json", "w")
+    f.write(json.dumps(save))
+    f.close()
     
-    # for x in save_data
-
+'''TODO
+Translate save to sql format
+'''
+def load_save_data():
+    print("This where we load a character")
+    
 chapter_one = {
     "started"         : False,
     "main_story"      : False,
@@ -398,7 +526,6 @@ chapter = {
           }            
 
 save_data = {
-             "player_name" : None,
              "player_stats" : None,
              "chapter" : chapter
             }   
@@ -418,14 +545,16 @@ while viewing_main_menu:
     if choice == 1:
         print("Hello, please select a name.")
         player_name = input()
-        Player = Select_Class(player_name)
+        Player = select_class(player_name)
         chapter_one_prologue(save_data)
+        viewing_main_menu = False
+    elif choice == 2:
+        load_save_data()
         viewing_main_menu = False
     else:
         exit()
 
-    
-
+'''
 choice = "y"
 while choice != "n":
     print("Would you like to batlle?")
@@ -439,7 +568,4 @@ while choice != "n":
                 Player.Level_Up()
         else:
             print("Why'd you lose?\n")
-               
-
-            
-        
+'''
