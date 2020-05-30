@@ -1,28 +1,26 @@
 class Room:
-    def __init__ (self, name = "", enviornment = "", links = [], display_paths = False):
-        self.name        = name
-        self.enviornment = enviornment
-        self.above       = links[0]
-        self.below       = links[1]
-        self.right       = links[2]
-        self.left        = links[3]
-        self.Paths(display_paths)
+    def __init__ (self, name = "", environment = "", links = []):
+        self.name          = name
+        self.environment   = environment
+        self.north         = links[0]
+        self.south         = links[1]
+        self.east          = links[2]
+        self.west          = links[3]
         
-    def Paths(self, display_paths):
-        if display_paths == True:
-            if self.above != False:
-                print("There is a path to the north")
+    def display_paths(self):
+        if self.north != False:
+            print(f"There is a path to the north in {self.name}")
+        
+        if self.south != False:
+            print(f"There is a path to the south in {self.name}")
+        
+        if self.east != False:
+            print(f"There is a path to the east in {self.name}")
             
-            if self.below != False:
-                print("There is a path to the south")
-            
-            if self.right != False:
-                print("There is a path to the east")
-                
-            if self.left != False:
-                print("There is a path to the west")
+        if self.west != False:
+            print(f"There is a path to the west in {self.name}")
     
-    def ChangeRoom(self, room):
+    def change_room(self, room):
         pass
 
 class Player:
@@ -119,48 +117,54 @@ class PlayerClass:
 
 player_class = {}
 player_class['Wizard']  = PlayerClass("Wizard",
-                                     [1, 1, 1, 1, 5, 10, 1, 1, 75, 100, 75, 35, 50],
-                                     ["Fire Ball", 5, "Freeze", 5]
+                                      [1, 1, 1, 1, 5, 10, 1, 1, 75, 100, 75, 35, 50],
+                                      ["Fire Ball", 5, "Freeze", 5]
                                      )
 player_class["Warrior"] = PlayerClass("Warrior",
                                       [1, 5, 5, 5, 2, 1, 1, 1, 50, 100, 90, 35, 35],
                                       ["Defend", 5, "Counter Strike", 5]
-                                      )
+                                     )
 player_class["Ranger"]  = PlayerClass("Ranger",
-                                     [1, 1, 1, 1, 5, 1, 10, 1, 50, 150, 50, 30, 35],
-                                     ["Quick Shot", 5, "Arrow Storm", 5]
+                                      [1, 1, 1, 1, 5, 1, 10, 1, 50, 150, 50, 30, 35],
+                                      ["Quick Shot", 5, "Arrow Storm", 5]
                                      )
 
 world = {} 
 world['MainRoom'] = Room("MainRoom",
                          "Not Hostile",
-                         ["Room_A", "Room_C", "Room_D", "Room_B"],
-                         True
+                         ["Room_A", "Room_C", "Room_D", "Room_B"]
                         )
 world["Room_A"] = Room("Room A",
                        "Hostile",
-                       [False, "MainRoom", False, False],
-                       True
-                       )
+                       [False, "MainRoom", False, False]
+                      )
 world["Room_B"] = Room("Room B",
                        "Not Hostile",
-                       [False, False, "MainRoom", False],
-                       True
-                       )
+                       [False, False, "MainRoom", False]
+                      )
+world["Room_C"] = Room("Room_C",
+                       "Hostile",
+                       ["MainRoom", False, False, False]
+                      )
+world["Room_D"] = Room("Room_D",
+                       "Not Hostile",
+                       [False, False, False, "MainRoom"]
+                      )
 
 location = world["MainRoom"]
 leave = False
 while leave != True:
+    location.display_paths()
     print("You are currently in:\n",
           "Room Name        : ", location.name, "\n",
-          "Room Enviornment : ", location.enviornment
+          "Room Enviornment : ", location.environment
           )
     print("Where would you like to go?")
 
-    path_choices = {1: location.above,
-                    2: location.below,
-                    3: location.right,
-                    4: location.left
+    path_choices = {1: location.north,
+                    2: location.south,
+                    3: location.east,
+                    4: location.west
                    }
     print("1: North\n2: South\n3: East\n4: West")
 
