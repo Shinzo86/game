@@ -1,11 +1,38 @@
+class Room:
+    def __init__ (self, name = "", enviornment = "", links = [], display_paths = False):
+        self.name        = name
+        self.enviornment = enviornment
+        self.above       = links[0]
+        self.below       = links[1]
+        self.right       = links[2]
+        self.left        = links[3]
+        self.Paths(display_paths)
+        
+    def Paths(self, display_paths):
+        if display_paths == True:
+            if self.above != False:
+                print("There is a path to the north")
+            
+            if self.below != False:
+                print("There is a path to the south")
+            
+            if self.right != False:
+                print("There is a path to the east")
+                
+            if self.left != False:
+                print("There is a path to the west")
+    
+    def ChangeRoom(self, room):
+        pass
+
 class Player:
     def __init__(self, chosen_name="", player_stat=[], player_location="", inventory=[]):
         self.player_name       = chosen_name
         self.player_hp         = player_stat[1] * 10
-        self.player_stat       = get_player_stat(player_stat)
+        get_player_stat(player_stat)
         self.player_exp        = 0
         self.player_location   = player_location
-        self.inventory         = inventory
+        self.inventory         = get_inventory(inventory)
         
     def get_player_stat(self, player_stat):
         self.level             = player_stat[0]
@@ -104,6 +131,47 @@ player_class["Ranger"]  = PlayerClass("Ranger",
                                      ["Quick Shot", 5, "Arrow Storm", 5]
                                      )
 
+world = {} 
+world['MainRoom'] = Room("MainRoom",
+                         "Not Hostile",
+                         ["Room_A", "Room_C", "Room_D", "Room_B"],
+                         True
+                        )
+world["Room_A"] = Room("Room A",
+                       "Hostile",
+                       [False, "MainRoom", False, False],
+                       True
+                       )
+world["Room_B"] = Room("Room B",
+                       "Not Hostile",
+                       [False, False, "MainRoom", False],
+                       True
+                       )
+
+location = world["MainRoom"]
+leave = False
+while leave != True:
+    print("You are currently in:\n",
+          "Room Name        : ", location.name, "\n",
+          "Room Enviornment : ", location.enviornment
+          )
+    print("Where would you like to go?")
+
+    path_choices = {1: location.above,
+                    2: location.below,
+                    3: location.right,
+                    4: location.left
+                   }
+    print("1: North\n2: South\n3: East\n4: West")
+
+    choice = int(input("? "))
+
+    if path_choices[choice] != False:
+        print(path_choices[choice])
+        #location = location[f"{path_choices[choice]}"]
+        location = world[path_choices[choice]]
+    else:
+        print("can't go that way")
 
 '''                                    
     class_name = "Wizard"
