@@ -1,16 +1,12 @@
 class Player:
-    def __init__(self, chosen_name = "", player_stat[], exp, is_level_up = false, player_location):
+    def __init__(self, chosen_name="", player_stat=[], player_location="", inventory=[]):
         self.player_name       = chosen_name
-        self.player_hp         = get_player_hp(player_stat[1])
+        self.player_hp         = player_stat[1] * 10
         self.player_stat       = get_player_stat(player_stat)
-        self.player_exp        = get_player_exp(exp)
-        self.level_up          = Level_Up(is_level_up)
-        self.player_location   = get_player_location(player_location)
+        self.player_exp        = 0
+        self.player_location   = player_location
+        self.inventory         = inventory
         
-    def get_player_hp(self, player_str):
-        self.player_hp = player_str * 10
-        return(player_hp)
-
     def get_player_stat(self, player_stat):
         self.level             = player_stat[0]
         self.strength          = player_stat[1]
@@ -26,53 +22,55 @@ class Player:
         self.evasion           = player_stat[11]
         self.dodge             = player_stat[12]
 
+    def level_up(self):
+        answer = "n"
+        self.level += 1
+        skill_points = 3
+        while answer != "y":
+            print("\n-----------LEVEL UP-------------")
+            print("\nYou have earned 3 skill points!\n")
+            print("\nLevel         :", self.level,
+                  "\nStrength      :", self.strength,
+                  "\nDefense       :", self.defense,
+                  "\nMagic Defense :", self.magic_defense,
+                  "\nAttack        :", self.attack,
+                  "\nMagic         :", self.magic,
+                  "\nSpeed         :", self.speed,
+                  "\nLuck          :", self.luck
+                 )
+            strength_up      = int(input("Strength? "))
+            defense_up       = int(input("Defense? "))
+            magic_defense_up = int(input("Magic Defense? "))
+            attack_up        = int(input("Attack? "))
+            magic_up         = int(input("Magic? "))
+            speed_up         = int(input("Speed? "))
+            luck_up          = int(input("Luck? "))
+            print("\nStrength      +", strength_up,
+                  "\nDefense       +", defense_up,
+                  "\nMagic Defense +", magic_defense_up,
+                  "\nAttack        +", attack_up,
+                  "\nMagic         +", magic_up,
+                  "\nSpeed         +", speed_up,
+                  "\nLuck          +", luck_up,
+                 )
+            print("\nWould you like to save changes?\n(Y) yes or (N) no")
+            answer = input("? ")
+        self.strength      += strength_up
+        self.defense       += defense_up
+        self.magic_defense += magic_defense_up
+        self.attack        += attack_up
+        self.magic         += magic_up
+        self.speed         += speed_up
+        self.luck          += luck_up
+
     def get_player_location(self, current_location):
         player_location = current_location
 
-    def Level_Up(self, is_level_up):
-        if is_level_up == True:
-            answer = "n"
-            self.level += 1
-            skill_points = 3
-            while answer != "y":
-                print("\n-----------LEVEL UP-------------")
-                print("\nYou have earned 3 skill points!\n")
-                print("\nLevel         :", self.level,
-                      "\nStrength      :", self.strength,
-                      "\nDefense       :", self.defense,
-                      "\nMagic Defense :", self.magic_defense,
-                      "\nAttack        :", self.attack,
-                      "\nMagic         :", self.magic,
-                      "\nSpeed         :", self.speed,
-                      "\nLuck          :", self.luck
-                     )
-                strength_up      = int(input("Strength? "))
-                defense_up       = int(input("Defense? "))
-                magic_defense_up = int(input ("Magic Defense? "))
-                attack_up        = int(input("Attack? "))
-                magic_up         = int(input("Magic? "))
-                speed_up         = int(input("Speed? "))
-                luck_up          = int(input("Luck? "))
-                print("\nStrength      +", strength_up,
-                      "\nDefense       +", defense_up,
-                      "\nMagic Defense +", magic_defense_up,
-                      "\nAttack        +", attack_up,
-                      "\nMagic         +", magic_up,
-                      "\nSpeed         +", speed_up,
-                      "\nLuck          +", luck_up,
-                     )
-                print("\nWould you like to save changes?\n(Y) yes or (N) no")
-                answer = input("? ")
-            self.strength      += strength_up
-            self.defense       += defense_up
-            self.magic_defense += magic_defense_up
-            self.attack        += attack_up
-            self.magic         += magic_up
-            self.speed         += speed_up
-            self.luck          += luck_up
+    def get_inventory(self):
+        return(self.inventory)
 
 class PlayerClass:
-    def __init__ (self, class_name = "", class_attribute[], class_ability[]):
+    def __init__ (self, class_name = "", class_attribute=[], class_ability=[]):
         self.class_name        = class_name
         self.level             = class_attribute[0]
         self.strength          = class_attribute[1]
@@ -105,6 +103,8 @@ player_class["Ranger"]  = PlayerClass("Ranger",
                                      [1, 1, 1, 1, 5, 1, 10, 1, 50, 150, 50, 30, 35],
                                      ["Quick Shot", 5, "Arrow Storm", 5]
                                      )
+
+
 '''                                    
     class_name = "Wizard"
     Level = 1
