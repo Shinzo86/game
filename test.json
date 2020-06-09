@@ -1,0 +1,1 @@
+{"italian_dishes": {"spaghetti": true, "lasagna": false, "pizza": false}, "burgers": {"classic": false, "royale": false, "double_whopper": true}, "steaks": {"sirloin": true, "ribeye": false, "new_york_strip": false}, "appetizers": {"mozz_sticks": false, "queso": true}, "desserts": {"ice_cream": true, "cake": false, "pie": false}}
