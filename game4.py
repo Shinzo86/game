@@ -22,8 +22,7 @@ class MapGroup:
             for col in range(self.bound_x + 1):
                 map_str += self.map[row][col]
             print(map_str)
-        
-                
+                        
     def _build_map(self, index_x, index_y):
         temp_dict = {}
         for row in range(index_y + 1):
@@ -43,11 +42,23 @@ class MapGroup:
             else:
                 self.map[room.coord_y - 1][room.coord_x - 1] = "[ ]"
 
-
-
     def _get_bounds(self):
         
         return (max(self.room_coord_list)[0], max(self.room_coord_list, key=operator.itemgetter(1))[1])
+
+    @staticmethod
+    def generate_map(map_name):
+        room_dict = {}
+        # for row in range(y):
+        #     for col in range(x):
+        #         room_dict[(col,row)] = Room()
+        room_dict[map_name] = Room(map_name,
+                         "Not Hostile",
+                         [False, False, False, False],
+                         1,1
+                        )
+
+        return MapGroup(map_name, room_dict)
 
 
 
@@ -231,12 +242,18 @@ world["Room_D"] = Room("Room_D",
 
 starting_map = MapGroup("starting_map", world)
 
+forest_map = MapGroup.generate_map("underground")
+
+
+# player = Player(
+#         "Boshi",
+#         [1, 1, 1, 1, 5, 1, 10, 1, 50, 150, 50, 30, 35],
+#         starting_map.rooms["MainRoom"])
 
 player = Player(
         "Boshi",
         [1, 1, 1, 1, 5, 1, 10, 1, 50, 150, 50, 30, 35],
-        starting_map.rooms["MainRoom"])
-
+        forest_map.rooms["underground"])
 
 leaving = False
 while not leaving:
@@ -246,10 +263,11 @@ while not leaving:
           "Room Enviornment : ", player.player_location.environment
           )
     print()
-    starting_map.draw_map()
+    # starting_map.draw_map()
+    forest_map.draw_map()
     print()
     print("Where would you like to go?")
-
+r
     path_choices = {1: player.player_location.north,
                     2: player.player_location.south,
                     3: player.player_location.east,
